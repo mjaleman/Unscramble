@@ -48,7 +48,8 @@ class GameFragment : Fragment() {
     ): View {
         // Inflate the layout XML file and return a binding object instance
         binding = GameFragmentBinding.inflate(inflater, container, false)
-        Log.d("GameFragment", "GameFragment created/re-created!")
+        Log.d("GameFragment", "Word: ${viewModel.currentScrambledWord} " +
+                "Score: ${viewModel.score} WordCount: ${viewModel.currentWordCount}")
         return binding.root
     }
 
@@ -110,7 +111,8 @@ class GameFragment : Fragment() {
      * Re-initializes the data in the ViewModel and updates the views with the new data, to
      * restart the game.
      */
-    private fun restartGame() {
+    private fun restartGame(){
+        viewModel.reinitializeData()
         setErrorTextField(false)
         updateNextWordOnScreen()
     }
@@ -155,9 +157,8 @@ class GameFragment : Fragment() {
             .setTitle(getString(R.string.congratulations))
             .setMessage(getString(R.string.you_scored, viewModel.score))
             .setCancelable(false)
-            .setNegativeButton(getString(R.string.exit)) { _, _ -> exitGame()}
-            .setPositiveButton(getString(R.string.play_again)) { _, _ -> restartGame()}
+            .setNegativeButton(getString(R.string.exit)) { _, _ -> exitGame() }
+            .setPositiveButton(getString(R.string.play_again)) { _, _ -> restartGame() }
             .show()
     }
-
 }
